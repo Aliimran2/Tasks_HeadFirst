@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.taskshf.adapters.TaskItemAdapter
 import com.example.taskshf.database.TaskDatabase
 import com.example.taskshf.databinding.FragmentTaskBinding
 import com.example.taskshf.viewmodel.TaskViewModel
@@ -23,7 +24,6 @@ class TaskFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        return inflater.inflate(R.layout.fragment_task,container,false)
         _binding = FragmentTaskBinding.inflate(layoutInflater,container,false)
         val view = binding.root
 
@@ -33,7 +33,20 @@ class TaskFragment : Fragment() {
         val mVewModel = ViewModelProvider(this, viewModelFactory)[TaskViewModel::class.java]
 
 
+
+
+        val taskItemAdapter = TaskItemAdapter()
+        binding.taskRecyclerView.adapter = taskItemAdapter
+
         binding.xViewModel = mVewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        mVewModel.tasks.observe(viewLifecycleOwner){
+            it?.let {
+                taskItemAdapter.submitList(it)
+            }
+        }
+
 
 
         return view
