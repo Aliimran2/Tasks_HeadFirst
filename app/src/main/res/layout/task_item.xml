@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/task_title"
-        android:textSize="24sp"
-        tools:text="Reading"
-        android:padding="8dp"/>
+    <data>
+        <variable
+            name="task"
+            type="com.example.taskshf.database.Task" />
+    </data>
 
-</RelativeLayout>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        app:cardCornerRadius="8dp"
+        android:padding="8dp"
+        android:layout_margin="2dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/task_title"
+                android:textSize="16sp"
+                tools:text="@{task.taskName}"
+                android:padding="8dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Done?"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:checked="@={task.taskDone}"
+                android:clickable="false"
+                android:id="@+id/check_box" />
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</layout>

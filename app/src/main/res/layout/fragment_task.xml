@@ -34,23 +34,18 @@
             android:layout_marginBottom="16dp"
             android:padding="16dp"
             android:onClick="@{()->xViewModel.addTask()}"
-            android:text="@{`Save Task`, default = `Save Task`}" />
-        
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:text="Tasks"
-            android:layout_marginBottom="16dp"
-            android:id="@+id/tasks"/>
+            android:text="@{`Save task`}" />
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:padding="8dp"-->
-<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--            android:orientation="vertical"-->
-<!--            android:id="@+id/task_recycler_view" />-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="top"
+            android:padding="8dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:orientation="vertical"
+            app:spanCount="2"
+            android:id="@+id/task_recycler_view" />
 
     </LinearLayout>
 </layout>
