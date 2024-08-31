@@ -1,20 +1,32 @@
 package com.example.taskshf.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.taskshf.database.Task
 import com.example.taskshf.database.TaskDao
 import kotlinx.coroutines.launch
 
+
 class TaskViewModel(val dao: TaskDao):ViewModel() {
 
-    var newTaskName = ""
+    var newTaskName = MutableLiveData<String>()
+    val tasks = dao.getAll()
 
     fun addTask(){
         viewModelScope.launch {
             val task = Task()
-            task.taskName = newTaskName
+            task.taskName = newTaskName.value!!
+
             dao.insert(task)
+            newTaskName.value = ""
+        }
+    }
+
+    fun deleteTask(task: Task){
+        viewModelScope.launch {
+            dao.delete(task)
         }
     }
 }
