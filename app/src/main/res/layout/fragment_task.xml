@@ -39,8 +39,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:text="Tasks"
+            android:textSize="18sp"
+            android:text="@{xViewModel.taskString}"
             android:layout_marginBottom="16dp"
             android:id="@+id/tasks"/>
 

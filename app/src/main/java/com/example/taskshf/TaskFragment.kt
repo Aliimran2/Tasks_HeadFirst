@@ -34,6 +34,7 @@ class TaskFragment : Fragment() {
 
 
         binding.xViewModel = mVewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
 
         return view
