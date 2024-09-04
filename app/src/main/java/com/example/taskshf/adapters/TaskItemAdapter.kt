@@ -1,52 +1,51 @@
 package com.example.taskshf.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskshf.OnChangeStateListener
-import com.example.taskshf.OnDeleteTaskListener
-import com.example.taskshf.R
+import com.example.taskshf.listeners.EventListeners
 import com.example.taskshf.database.Task
-import com.example.taskshf.databinding.FragmentTaskBinding
 import com.example.taskshf.databinding.TaskItemBinding
 import com.example.taskshf.util.TaskDiffUtilItemCallBack
 
-class TaskItemAdapter(
-    private val listener: OnDeleteTaskListener,
-    private val checkBoxListener: OnChangeStateListener
-): ListAdapter<Task, TaskItemAdapter.TaskVH>(TaskDiffUtilItemCallBack()) {
+class TaskItemAdapter(private val listener: EventListeners) :
+    ListAdapter<Task, TaskItemAdapter.TaskVH>(TaskDiffUtilItemCallBack()) {
 
-    class TaskVH(private val binding: TaskItemBinding):RecyclerView.ViewHolder(binding.root) {
+    class TaskVH(private val binding: TaskItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(task :Task, listener: OnDeleteTaskListener, checkBoxListener: OnChangeStateListener){
+        var toggle = false
+        fun bind(task: Task, listener: EventListeners) {
             binding.task = task
-            binding.checkBox.isChecked = task.taskDone
             binding.root.setOnLongClickListener {
-                listener.onTaskDelete(task)
+
+                listener.onItemLongClickListener(task)
                 true
             }
             binding.root.setOnClickListener {
-                checkBoxListener.changeState(task)
+
+                toggle = !toggle
+
+                binding.root.setBackgroundColor(if(toggle) Color.RED else Color.GREEN)
+                listener.onItemClickListener(task)
             }
         }
 
-        companion object{
-            fun inflateFrom(parent: ViewGroup) : TaskVH {
+        companion object {
+            fun inflateFrom(parent: ViewGroup): TaskVH {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val rootView = TaskItemBinding.inflate(layoutInflater,parent,false)
+                val rootView = TaskItemBinding.inflate(layoutInflater, parent, false)
                 return TaskVH(rootView)
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskVH = TaskVH.inflateFrom(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskVH =
+        TaskVH.inflateFrom(parent)
 
     override fun onBindViewHolder(holder: TaskVH, position: Int) {
-        holder.bind(getItem(position), listener, checkBoxListener)
+        val taskItem = getItem(position)
+        holder.bind(taskItem, listener)
     }
 }

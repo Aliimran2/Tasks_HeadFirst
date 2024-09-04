@@ -1,10 +1,9 @@
-package com.example.taskshf
+package com.example.taskshf.ui
 
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
-import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.example.taskshf.R
 
 class MainActivity : AppCompatActivity() {
     var isToggle = true
